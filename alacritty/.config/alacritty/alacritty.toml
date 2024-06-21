@@ -1,0 +1,22 @@
+# # We use Alacritty's default Linux config directory as our storage location here.
+# mkdir -p ~/.config/alacritty/themes
+# git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+import = [
+    "~/.config/alacritty/themes/themes/material_theme.toml"
+]
+
+[mouse]
+bindings = [
+    { mouse = "Right", action = "Paste" }
+]
+
+[selection]
+save_to_clipboard = true
+
+[window]
+padding = { x = 4, y = 8 }
+
+[keyboard]
+bindings = [
+  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" }
+]
