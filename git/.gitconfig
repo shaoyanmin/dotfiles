@@ -1,0 +1,35 @@
+[user]
+	name = Shao Yanmin
+	email = shaoyan.alpha@gmail.com
+[merge]
+	tool = kdiff3
+[mergetool "kdiff3"]
+	path = /usr/bin/kdiff3
+	trustExitCode = false
+[diff]
+	guitool = kdiff3
+[difftool "kdiff3"]
+	path = /usr/bin/kdiff3
+	trustExitCode = false
+[init]
+	defaultBranch = main
+[alias]
+  b = branch
+  s = status -sb
+  m = merge
+  co = checkout
+  fa = fetch --all
+  pr = pull --rebase
+	last = log -1 HEAD --stat
+  # Git last commit
+	cm = commit -m
+	l = log --oneline
+  # Git config list
+	gl = config --global -l
+  # Git search commit
+	se = !git rev-list --all | xargs git grep -F
+  ss = stash save
+  sp = stash pop
+  sl = stash list
+[credential]
+	helper = store
