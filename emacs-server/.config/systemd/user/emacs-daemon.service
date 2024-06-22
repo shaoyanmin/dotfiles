@@ -1,0 +1,13 @@
+[Unit]
+Description=Emacs running as a daemon
+Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+After=default.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/emacs --daemon --eval "(add-to-list 'default-frame-alist '(font . \"Source Code Pro 11\"))"
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+
+[Install]
+WantedBy=default.target

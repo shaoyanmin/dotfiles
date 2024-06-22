@@ -19,4 +19,5 @@ stow -n -t ~/ -vv <PACKAGE_NAME>
 ## Config files list
 * [x] bash
 * [x] alacritty
-* [ ] git
+* [x] git
+* [x] Emacs server daemon
