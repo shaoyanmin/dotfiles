@@ -1,2 +1,3 @@
 alias pn=pnpm
 alias z=zellij
+alias e="emacsclient -c"

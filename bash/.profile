@@ -28,3 +28,21 @@ export PATH="$PATH:/home/ian/.local/share/JetBrains/Toolbox/scripts"
 # NPM Versions Manager
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+# appimage default dir
+# export PATH="$HOME/Applications"
+
+# Wayland
+## Fix env vars warnning for fcitx
+unset GTK_IM_MODULE
+unset QT_IM_MODULE
+unset SDL_IM_MODULE
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+test -r '/home/ian/.opam/opam-init/init.sh' && . '/home/ian/.opam/opam-init/init.sh' > /dev/null 2> /dev/null || true
+# END opam configuration
