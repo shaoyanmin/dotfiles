@@ -38,3 +38,10 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+[[ -s "/home/ian/.gvm/scripts/gvm" ]] && source "/home/ian/.gvm/scripts/gvm"
+
+
+# go
+export GOPATH=/home/ian/go
+export PATH=$PATH:$GOPATH/bin
