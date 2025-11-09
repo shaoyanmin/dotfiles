@@ -32,4 +32,8 @@
   sp = stash pop
   sl = stash list
 [credential]
-	helper = store
+	gitHubAccountFiltering = false
+	credentialStore = cache
+	interactive = auto
+	helper = /usr/libexec/git/git-credential-libsecret
+	helper = oauth

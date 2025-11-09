@@ -14,7 +14,7 @@ test -s ~/.envars && . ~/.envars || true
 
 eval "$(zoxide init bash --cmd j)"
 
-export EDITOR="emacsclient -nw"
+# export EDITOR="emacsclient -nw"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
