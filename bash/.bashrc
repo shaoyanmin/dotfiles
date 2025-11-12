@@ -45,3 +45,8 @@ esac
 # go
 export GOPATH=/home/ian/go
 export PATH=$PATH:$GOPATH/bin
+
+
+# >>> xmake >>>
+test -f "/home/ian/.xmake/profile" && source "/home/ian/.xmake/profile"
+# <<< xmake <<<
