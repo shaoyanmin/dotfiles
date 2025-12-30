@@ -32,21 +32,34 @@ function yy() {
 }
 
 # pnpm
-export PNPM_HOME="/home/ian/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
-[[ -s "/home/ian/.gvm/scripts/gvm" ]] && source "/home/ian/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 
 # go
-export GOPATH=/home/ian/go
+export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 
 # >>> xmake >>>
-test -f "/home/ian/.xmake/profile" && source "/home/ian/.xmake/profile"
+test -f "$HOME/.xmake/profile" && source "$HOME/.xmake/profile"
 # <<< xmake <<<
+
+# Android Studio
+export ANDROID_HOME=$HOME/Android/Sdk
+
+# Add SDK tools to PATH
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+
+# Flutter
+export PATH="$HOME/fvm/bin:$PATH"
