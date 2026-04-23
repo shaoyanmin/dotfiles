@@ -1,0 +1,3 @@
+[submodule "gimp/.config/GIMP/3.2"]
+	path = gimp/.config/GIMP/3.2
+	url = https://github.com/loloolooo/photoshop-keymap-for-gimp

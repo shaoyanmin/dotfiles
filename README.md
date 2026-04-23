@@ -1,4 +1,10 @@
 # Personal Dotfiles Managed by GNU Stow
+## Git submodules
+This repository uses git submodules for some configurations. After cloning, run:
+```bash
+git submodule update --init --recursive
+```
+
 ## Stow cheatsheet
 ```bash
 # Dry run commands
@@ -21,3 +27,4 @@ stow -n -t ~/ -vv <PACKAGE_NAME>
 * [x] alacritty
 * [x] git
 * [x] Emacs server daemon
+* [x] GIMP (Photoshop keymap)
