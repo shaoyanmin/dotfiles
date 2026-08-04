@@ -14,6 +14,75 @@ test -s ~/.envars && . ~/.envars || true
 
 eval "$(zoxide init bash --cmd j)"
 
+# Terminal title:
+# - Local shell: Git repository root, or current directory outside Git.
+# - Interactive SSH: SSH alias/IP from the local SSH config.
+# - Restore local title immediately after SSH disconnects.
+
+_set_terminal_title() {
+    [[ -t 1 ]] || return
+
+    # Write directly to the terminal so SSH/rsync stdout stays clean.
+    printf '\033]0;%s\007' "$1" > /dev/tty
+}
+
+_update_terminal_title() {
+    local title_path
+
+    title_path="$(git rev-parse --show-toplevel 2>/dev/null)" ||
+        title_path="$PWD"
+
+    # Collapse the home directory to ~.
+    case "$title_path" in
+        "$HOME")
+            title_path='~'
+            ;;
+        "$HOME"/*)
+            title_path="~${title_path#"$HOME"}"
+            ;;
+    esac
+
+    _set_terminal_title "$title_path"
+}
+
+# Wrap directly invoked SSH sessions.
+# rsync, scp and non-terminal SSH calls do not trigger this.
+ssh() {
+    local ssh_config remote_user remote_host status
+
+    if [[ -t 1 ]]; then
+        ssh_config="$(command ssh -G "$@" 2>/dev/null)"
+
+        remote_user="$(
+            awk '$1 == "user" { print $2; exit }' <<<"$ssh_config"
+        )"
+
+        # "host" preserves the SSH alias; if no alias is used, it is the IP/host.
+        remote_host="$(
+            awk '$1 == "host" { print $2; exit }' <<<"$ssh_config"
+        )"
+
+        _set_terminal_title \
+            "SSH: ${remote_user:+${remote_user}@}${remote_host:-unknown}"
+    fi
+
+    command ssh "$@"
+    status=$?
+
+    # Restore Git/path title immediately after disconnecting.
+    _update_terminal_title
+
+    return "$status"
+}
+
+# Run last so the local title stays synchronized after every command.
+case ";${PROMPT_COMMAND:-};" in
+    *";_update_terminal_title;"*) ;;
+    *)
+        PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;}_update_terminal_title"
+        ;;
+esac
+
 # export EDITOR="emacsclient -nw"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
@@ -41,25 +110,29 @@ esac
 
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-
 # go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 
-# >>> xmake >>>
-test -f "$HOME/.xmake/profile" && source "$HOME/.xmake/profile"
-# <<< xmake <<<
-
 # Android Studio
 export ANDROID_HOME=$HOME/Android/Sdk
+# Deprecated but still used by some older tools to find the .android folder
+export ANDROID_SDK_HOME=$HOME
 
 # Add SDK tools to PATH
 export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 
 # Flutter
 export PATH="$HOME/fvm/bin:$PATH"
+# >>> xmake >>>
+test -f "/home/ian/.xmake/profile" && source "/home/ian/.xmake/profile"
+# <<< xmake <<<
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/ian/.local/bin:$PATH"
